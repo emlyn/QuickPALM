@@ -138,7 +138,8 @@ class MyFunctions
 					ip.set(i,j,0);
 				}
 			}
-			
+
+		ImageProcessor raw=ip.duplicate();
 		ImageProcessor spip=ip.duplicate(); // short-pass version of ip
 		ImageProcessor lpip=ip.duplicate(); // low-pass version of ip
 		gblur.blur(spip, 0.5);
@@ -189,6 +190,9 @@ class MyFunctions
 		for (int n=0;n<=dg.maxpart;n++)
 		{
 			maxs = getMaxPositions(ip);
+			IJ.log("Frame " + nframe + "; particle " + n + "; position " + maxs[1] + ", " + maxs[2]
+					+ "; value " + ip.get(maxs[1], maxs[2]) + "; threshold " + snrthresh
+					+ "; raw " + raw.get(maxs[1], maxs[2]) + "; saturation " + saturation);
 			if (ip.get(maxs[1], maxs[2])<snrthresh) break;
 			else if (getParticle(ip, mask, maxs, dg, ptable, nframe))
 				ok_nparticles++;
